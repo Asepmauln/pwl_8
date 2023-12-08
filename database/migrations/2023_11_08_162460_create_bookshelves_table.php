@@ -13,23 +13,18 @@ return new class extends Migration
     {
         Schema::create('bookshelves', function (Blueprint $table) {
             $table->id();
-            $table->string('code',15);
+            $table->string('code', 15);
             $table->string('name');
             $table->timestamps();
         });
-
         Schema::table('books', function (Blueprint $table) {
             $table->unsignedBigInteger('bookshelf_id')->after('quantity');
-        
             $table->foreign('bookshelf_id')
-            ->references('id')
-            ->on('bookshelves')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-        
+                    ->references('id')
+                    ->on('bookshelves')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
-
-
     }
 
     /**
@@ -41,7 +36,6 @@ return new class extends Migration
             $table->dropForeign('books_bookshelf_id_foreign');
             $table->dropColumn('bookshelf_id');
         });
-
         Schema::dropIfExists('bookshelves');
     }
 };
